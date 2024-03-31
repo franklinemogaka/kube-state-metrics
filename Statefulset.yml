@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: statefulset
+metadata:
+  name: kube-state-metrics
+  namespace: development
+  spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        app: kube-state-metrics
+    spec:
+      containers:
+      - name: kube-state-metrics
+        image: kubernetes/kube-state-metrics:v2.11.0
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: kube-state-metrics-config
