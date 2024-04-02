@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-state-metrics-config
+  namespace: development
+data:
+  config.yml: |
+    prometheus:
+      enabled: true
+      url: "http://prometheus-server:9090"
+      scrapeInterval: "30s"
+      scrapeConfigs: |
+        - job_name: 'kube-state-metrics'
+          kubernetes_sd_configs:
